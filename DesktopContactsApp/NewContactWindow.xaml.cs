@@ -1,4 +1,6 @@
 ﻿using System;
+using SQLite;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,6 +13,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using DesktopContactsApp.Classes;
 
 namespace DesktopContactsApp
 {
@@ -26,9 +29,23 @@ namespace DesktopContactsApp
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            // Save the Contact
+            Contact contact = new Contact()
+            {
+                Name = nameTextBox.Text,
+                Email = emailTextBox.Text,
+                Phone = phoneTextBox.Text
+            };
 
-            Close();
+            string databaseName = "Contacts.db";
+            string folderPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            string databasePath = System.IO.Path.Combine(folderPath, databaseName);
+
+            SQLiteConnection connection = new SQLiteConnection(databasePath);
+            connection.CreateTable<Contact>();
+            connection.Insert(contact);
+            connection.Close();
+
+            this.Close();
         }
     }
 }
