@@ -49,12 +49,17 @@ namespace DesktopContactsApp
             using(SQLite.SQLiteConnection conn = new SQLite.SQLiteConnection(App.databasePath))
             {
                 conn.CreateTable<Contact>();
-                contacts = conn.Table<Contact>().ToList();
+                contacts = (conn.Table<Contact>().ToList()).OrderBy(c => c.Name).ToList();
+
+                /* This is an example of how work the statement before.
+                var variable = from c2 in contacts
+                               orderby c2.Name
+                               select c2;
+                */
             }
 
             if(contacts != null)
             {
-                //foreach(var c in contacts)
                 //{
                 //    contactsListView.Items.Add(new ListViewItem() { Content = c});
                 //}
@@ -69,7 +74,14 @@ namespace DesktopContactsApp
             TextBox searchTextBox = (TextBox)sender;
             
             var filteredList = contacts.Where(c => c.Name.ToLower().Contains(searchTextBox.Text.ToLower())).ToList(); //We are filtering the contacts that contains what the user has written. 
-        
+
+
+            /* This is an example of how work the statement before.
+            var filteredList2 = (from c2 in contacts
+                                where c2.Name.ToLower().Contains(searchTextBox.Text.ToLower())
+                                select c2).ToList();
+            */
+
             contactsListView.ItemsSource = filteredList;
         }
 
