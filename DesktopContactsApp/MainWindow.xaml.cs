@@ -21,10 +21,15 @@ namespace DesktopContactsApp
     /// </summary>
     public partial class MainWindow : Window
     {
+
+        List<Contact> contacts;
+
+
         public MainWindow()
         {
             InitializeComponent();
 
+            contacts = new List<Contact>();
             ReadDatabase();
         }
 
@@ -40,7 +45,7 @@ namespace DesktopContactsApp
 
         void ReadDatabase()
         {
-            List<Contact> contacts;
+            
             using(SQLite.SQLiteConnection conn = new SQLite.SQLiteConnection(App.databasePath))
             {
                 conn.CreateTable<Contact>();
@@ -58,6 +63,15 @@ namespace DesktopContactsApp
             }
         }
 
+
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox searchTextBox = (TextBox)sender;
+            
+            var filteredList = contacts.Where(c => c.Name.ToLower().Contains(searchTextBox.Text.ToLower())).ToList(); //We are filtering the contacts that contains what the user has written. 
+        
+            contactsListView.ItemsSource = filteredList;
+        }
 
     }
 }
