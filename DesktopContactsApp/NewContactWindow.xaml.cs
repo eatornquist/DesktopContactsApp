@@ -28,7 +28,7 @@ namespace DesktopContactsApp
         }
 
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
             Contact contact = new Contact()
             {
