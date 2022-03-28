@@ -29,6 +29,9 @@ namespace DesktopContactsApp
         {
             InitializeComponent();
 
+            Owner = Application.Current.MainWindow;
+            WindowStartupLocation = WindowStartupLocation.CenterOwner; //Properties added to when we open a linked window, it appears in front of the actual window.
+
             this.contact = contact;
             nameTextBox.Text = contact.Name;
             emailTextBox.Text = contact.Email;

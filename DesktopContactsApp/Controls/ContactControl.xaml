@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:DesktopContactsApp.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="90" d:DesignWidth="300">
-    <Grid>
+    <Grid Background="LightGray">
         <StackPanel Margin="5">
             <TextBlock x:Name="nameTextBlock" 
                        Text="Name Lastname" 
